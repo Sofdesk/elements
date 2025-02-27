@@ -16,7 +16,12 @@ export const ElementsAPI: React.FC = () => {
 
   return (
     <Box flex={1} overflowY={layout !== 'stacked' ? 'hidden' : undefined}>
-      <API apiDescriptionUrl={specUrlWithProxy} router="hash" layout={layout} />
+      <API
+        apiDescriptionUrl={specUrlWithProxy}
+        router="hash"
+        logo={'https://www.solargraf.com/wp-content/uploads/2020/11/sg-logo.png'}
+        logoLink={'https://www.solargraf.com/'}
+      />
     </Box>
   );
 };

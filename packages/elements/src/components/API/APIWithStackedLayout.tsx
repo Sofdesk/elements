@@ -39,6 +39,7 @@ type StackedLayoutProps = {
   showPoweredByLink?: boolean;
   location: Location;
   renderExtensionAddon?: ExtensionAddonRenderer;
+  defaultExpandedDepth?: number;
 };
 
 const itemMatchesHash = (hash: string, item: OperationNode | WebhookNode) => {
@@ -90,6 +91,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
   renderExtensionAddon,
   showPoweredByLink = true,
   location,
+  defaultExpandedDepth,
 }) => {
   const { groups: operationGroups } = computeTagGroups<OperationNode>(serviceNode, NodeType.HttpOperation);
   const { groups: webhookGroups } = computeTagGroups<WebhookNode>(serviceNode, NodeType.HttpWebhook);
@@ -107,7 +109,7 @@ export const APIWithStackedLayout: React.FC<StackedLayoutProps> = ({
               nodeTitle={serviceNode.name}
               nodeType={NodeType.HttpService}
               location={location}
-              layoutOptions={{ showPoweredByLink, hideExport, hideSecurityInfo, hideServerInfo }}
+              layoutOptions={{ showPoweredByLink, hideExport, hideSecurityInfo, hideServerInfo, defaultExpandedDepth }}
               exportProps={exportProps}
               tryItCredentialsPolicy={tryItCredentialsPolicy}
               renderExtensionAddon={renderExtensionAddon}

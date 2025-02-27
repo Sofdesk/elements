@@ -56,6 +56,15 @@ export interface CommonAPIProps extends RoutingProps {
   layout?: 'sidebar' | 'stacked' | 'responsive';
   logo?: string;
 
+  /**
+   * href url redirecting when click on logo icon
+   * @defual https://solargraf.com/
+   */
+  logoLink?: string;
+
+  /**
+   * Allows hiding the TryIt component
+   */
   hideTryIt?: boolean;
   /**
    * Allows to hide RequestSamples component
@@ -122,6 +131,7 @@ export interface CommonAPIProps extends RoutingProps {
    * Allows to define renderers for vendor extensions
    */
   renderExtensionAddon?: ExtensionAddonRenderer;
+  defaultExpandedDepth?: number;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
@@ -134,6 +144,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     apiDescriptionUrl = '',
     logo,
     hideTryItPanel,
+    logoLink,
     hideTryIt,
     hideSamples,
     hideSecurityInfo,
@@ -145,6 +156,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     tryItCorsProxy,
     maxRefDepth,
     renderExtensionAddon,
+    defaultExpandedDepth,
   } = props;
   const location = useLocation();
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
@@ -217,11 +229,13 @@ export const APIImpl: React.FC<APIProps> = props => {
           tryItCorsProxy={tryItCorsProxy}
           renderExtensionAddon={renderExtensionAddon}
           location={location}
+          defaultExpandedDepth={defaultExpandedDepth}
         />
       )}
       {layout === 'sidebar' && (
         <APIWithSidebarLayout
           logo={logo}
+          logoLink={logoLink}
           serviceNode={serviceNode}
           hideTryItPanel={hideTryItPanel}
           hideTryIt={hideTryIt}
@@ -254,6 +268,7 @@ export const APIImpl: React.FC<APIProps> = props => {
           tryItCorsProxy={tryItCorsProxy}
           renderExtensionAddon={renderExtensionAddon}
           compact={isResponsiveLayoutEnabled}
+          defaultExpandedDepth={defaultExpandedDepth}
         />
       )}
     </InlineRefResolverProvider>

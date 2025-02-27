@@ -16,6 +16,7 @@ import { Parameters } from './Parameters';
 interface IRequestProps {
   operation: IHttpEndpointOperation;
   hideSecurityInfo?: boolean;
+  defaultExpandedDepth?: number;
   onChange?: (requestBodyIndex: number) => void;
 }
 
@@ -32,6 +33,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
     security,
   },
   hideSecurityInfo,
+  defaultExpandedDepth,
   onChange,
 }) => {
   if (!request || typeof request !== 'object') return null;
@@ -82,7 +84,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
         </VStack>
       )}
 
-      {body && <Body onChange={onChange} body={body} />}
+      {body && <Body onChange={onChange} body={body} defaultExpandedDepth={defaultExpandedDepth} />}
     </VStack>
   );
 };

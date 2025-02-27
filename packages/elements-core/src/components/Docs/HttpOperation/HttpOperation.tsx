@@ -102,11 +102,13 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
           onChange={setTextRequestBodyIndex}
           operation={data}
           hideSecurityInfo={layoutOptions?.hideSecurityInfo}
+          defaultExpandedDepth={layoutOptions?.defaultExpandedDepth}
         />
 
         {data.responses && (
           <Responses
             responses={data.responses}
+            defaultExpandedDepth={layoutOptions?.defaultExpandedDepth}
             onMediaTypeChange={setResponseMediaType}
             onStatusCodeChange={setResponseStatusCode}
             isCompact={isCompact}

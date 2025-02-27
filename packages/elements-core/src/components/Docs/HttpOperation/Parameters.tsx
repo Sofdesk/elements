@@ -52,6 +52,7 @@ export const Parameters: React.FunctionComponent<ParametersProps> = ({ parameter
       disableCrumbs
       nodeHasChanged={nodeHasChanged}
       renderExtensionAddon={renderExtensionAddon}
+      defaultExpandedDepth={2}
     />
   );
 };

@@ -21,6 +21,7 @@ type SidebarLayoutProps = {
   serviceNode: ServiceNode;
   logo?: string;
   hideTryItPanel?: boolean;
+  logoLink?: string;
   hideTryIt?: boolean;
   hideSamples?: boolean;
   hideSchemas?: boolean;
@@ -32,12 +33,14 @@ type SidebarLayoutProps = {
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
   renderExtensionAddon?: ExtensionAddonRenderer;
+  defaultExpandedDepth?: number;
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   serviceNode,
   logo,
   hideTryItPanel,
+  logoLink,
   hideTryIt,
   hideSamples,
   hideSchemas,
@@ -49,6 +52,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   tryItCredentialsPolicy,
   tryItCorsProxy,
   renderExtensionAddon,
+  defaultExpandedDepth,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -130,16 +134,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ serviceNode, logo, container, 
     <>
       <Flex ml={4} mb={5} alignItems="center">
         {logo ? (
-          <Logo logo={{ url: logo, altText: 'logo' }} />
+          <Logo logo={{ url: logo, altText: 'logo', href: logoLink || 'https://solargraf.com/' }} />
         ) : (
           serviceNode.data.logo && <Logo logo={serviceNode.data.logo} />
         )}
-        <Heading size={4}>{serviceNode.name}</Heading>
       </Flex>
       <Flex flexGrow flexShrink overflowY="auto" direction="col">
         <TableOfContents tree={tree} activeId={pathname} Link={Link} onLinkClick={handleTocClick} />
       </Flex>
-      <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
     </>
   );
 };

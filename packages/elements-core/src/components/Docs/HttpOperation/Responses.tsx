@@ -33,7 +33,8 @@ import { Parameters } from './Parameters';
 
 interface ResponseProps {
   response: IHttpOperationResponse;
-  onMediaTypeChange?: (mediaType: string) => void;
+  defaultExpandedDepth: number | undefined;
+  onMediaTypeChange(mediaType: string): void;
 }
 
 interface ResponsesProps {
@@ -41,6 +42,7 @@ interface ResponsesProps {
   onMediaTypeChange?: (mediaType: string) => void;
   onStatusCodeChange?: (statusCode: string) => void;
   isCompact?: boolean;
+  defaultExpandedDepth: number | undefined;
 }
 
 export const Responses = ({
@@ -48,6 +50,7 @@ export const Responses = ({
   onStatusCodeChange,
   onMediaTypeChange,
   isCompact,
+  defaultExpandedDepth,
 }: ResponsesProps) => {
   const responses = sortBy(
     uniqBy(unsortedResponses, r => r.code),
@@ -152,7 +155,11 @@ export const Responses = ({
         <TabPanels p={0}>
           {responses.map(response => (
             <TabPanel key={response.code} id={response.code}>
-              <Response response={response} onMediaTypeChange={onMediaTypeChange} />
+              <Response
+                response={response}
+                defaultExpandedDepth={defaultExpandedDepth}
+                onMediaTypeChange={onMediaTypeChange}
+              />
             </TabPanel>
           ))}
         </TabPanels>
@@ -162,7 +169,7 @@ export const Responses = ({
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
+const Response = ({ response, defaultExpandedDepth, onMediaTypeChange }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
@@ -218,6 +225,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               renderRootTreeLines
               nodeHasChanged={nodeHasChanged}
               renderExtensionAddon={renderExtensionAddon}
+              defaultExpandedDepth={defaultExpandedDepth || 2}
             />
           )}
         </>
